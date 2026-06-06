@@ -1105,6 +1105,21 @@
         "runtime": {
           "bin/placeholder/TODO-App.Domain.dll": {}
         }
+      },
+      "TODO-App.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.OpenApi": "8.0.26",
+          "Swashbuckle.AspNetCore": "6.6.2",
+          "TODO-App.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/TODO-App.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/TODO-App.Services.dll": {}
+        }
       }
     }
   },
@@ -3194,6 +3209,11 @@
       "type": "project",
       "path": "../TODO-App.Domain/TODO-App.Domain.csproj",
       "msbuildProject": "../TODO-App.Domain/TODO-App.Domain.csproj"
+    },
+    "TODO-App.Services/1.0.0": {
+      "type": "project",
+      "path": "../TODO-App.Services/TODO-App.Services.csproj",
+      "msbuildProject": "../TODO-App.Services/TODO-App.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3202,7 +3222,8 @@
       "Microsoft.EntityFrameworkCore >= 8.0.11",
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.11",
       "Swashbuckle.AspNetCore >= 6.6.2",
-      "TODO-App.Domain >= 1.0.0"
+      "TODO-App.Domain >= 1.0.0",
+      "TODO-App.Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -3234,6 +3255,9 @@
           "projectReferences": {
             "D:\\RiderProjects\\TODO-App\\TODO-App.Domain\\TODO-App.Domain.csproj": {
               "projectPath": "D:\\RiderProjects\\TODO-App\\TODO-App.Domain\\TODO-App.Domain.csproj"
+            },
+            "D:\\RiderProjects\\TODO-App\\TODO-App.Services\\TODO-App.Services.csproj": {
+              "projectPath": "D:\\RiderProjects\\TODO-App\\TODO-App.Services\\TODO-App.Services.csproj"
             }
           }
         }
