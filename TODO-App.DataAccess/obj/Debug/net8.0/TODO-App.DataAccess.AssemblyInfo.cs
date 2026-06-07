@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TODO-App.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec155d1aa0a94a7d0539f47a9f32a927b4acf56e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f4afd4f20627974126d903e897659d0d1114787")]
 [assembly: System.Reflection.AssemblyProductAttribute("TODO-App.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TODO-App.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

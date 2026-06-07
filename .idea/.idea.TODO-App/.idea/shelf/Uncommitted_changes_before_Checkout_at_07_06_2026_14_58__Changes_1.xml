@@ -1,0 +1,29 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1" date="1780833541679" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/.idea.TODO-App/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 07.06.2026 14:58 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="TODO-App.DataAccess/obj/project.nuget.cache" />
+    <option name="AFTER_PATH" value="TODO-App.DataAccess/obj/project.nuget.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TODO-App/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1/project.nuget.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="TODO-App.DataAccess/obj/Debug/net8.0/TODO-App.DataAccess.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="TODO-App.DataAccess/obj/Debug/net8.0/TODO-App.DataAccess.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TODO-App/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1/TODO-App.DataAccess.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="TODO-App.Services/obj/Debug/net8.0/TODO-App.Services.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="TODO-App.Services/obj/Debug/net8.0/TODO-App.Services.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TODO-App/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1/TODO-App.Services.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="TODO-App.Api/obj/Debug/net8.0/TODO-App.Api.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="TODO-App.Api/obj/Debug/net8.0/TODO-App.Api.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TODO-App/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1/TODO-App.Api.AssemblyInfoInputs.cache" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="TODO-App.Domain/obj/Debug/net8.0/TODO-App.Domain.AssemblyInfoInputs.cache" />
+    <option name="AFTER_PATH" value="TODO-App.Domain/obj/Debug/net8.0/TODO-App.Domain.AssemblyInfoInputs.cache" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/.idea.TODO-App/.idea/shelf/Uncommitted_changes_before_Checkout_at_07_06_2026_14_58_[Changes]1/TODO-App.Domain.AssemblyInfoInputs.cache" />
+  </binary>
+</changelist>
