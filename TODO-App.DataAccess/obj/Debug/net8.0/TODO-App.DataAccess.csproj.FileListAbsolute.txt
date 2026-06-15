@@ -1,0 +1,17 @@
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.DataAccess.deps.json
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.DataAccess.dll
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.DataAccess.pdb
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.Domain.dll
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.Services.dll
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.Domain.pdb
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\bin\Debug\net8.0\TODO-App.Services.pdb
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.csproj.AssemblyReference.cache
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.AssemblyInfoInputs.cache
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.AssemblyInfo.cs
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.csproj.CoreCompileInputs.cache
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.E4C47E05.Up2Date
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.dll
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\refint\TODO-App.DataAccess.dll
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\TODO-App.DataAccess.pdb
+D:\RiderProjects\TODO-App\TODO-App.DataAccess\obj\Debug\net8.0\ref\TODO-App.DataAccess.dll

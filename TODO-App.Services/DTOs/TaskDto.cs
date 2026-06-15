@@ -1,0 +1,12 @@
+﻿namespace TODO_App.Services.DTOs;
+
+public class TaskDto
+{
+    public int Id { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string? Description { get; set; }
+    public bool IsCompleted { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public int? CategoryId { get; set; }
+    public string? CategoryName { get; set; } // Щоб Angular міг легко вивести назву категорії
+}
