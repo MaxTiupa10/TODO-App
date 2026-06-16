@@ -5,11 +5,26 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>TODO_App</RootNamespace>
+        <UserSecretsId>todo-app-api-secrets</UserSecretsId>
     </PropertyGroup>
+
+    <ItemGroup>
+      <InternalsVisibleTo Include="TODO-App.Tests" />
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\TODO-App.DataAccess\TODO-App.DataAccess.csproj" />
       <ProjectReference Include="..\TODO-App.Services\TODO-App.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.12" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.12">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
 </Project>

@@ -1,13 +1,14 @@
 ﻿using TODO_App.Domain.Entities;
 
-namespace TODO_App.DataAccess.Interfaces;
+namespace TODO_App.Domain.Interfaces;
 
 public interface ITaskRepository
 {
-    Task<IEnumerable<ToDoTask>> GetTaskAsync(int userId,int pageNumber, int pageSize, int? categoryId, string? searchQuery);
-    Task<ToDoTask?> GetTaskByIdAsync(int userId,int taskId);
+    Task<(IEnumerable<ToDoTask> Items, int TotalCount)> GetTasksAsync(
+        int userId, int pageNumber, int pageSize, int? categoryId, string? searchQuery);
+    Task<ToDoTask?> GetTaskByIdAsync(int userId, int taskId);
     Task AddTaskAsync(ToDoTask task);
-    void UpdateTaskAsync(ToDoTask task);
-    void DeleteTaskAsync(ToDoTask task);
+    void UpdateTask(ToDoTask task);
+    void DeleteTask(ToDoTask task);
     Task SaveChangesAsync();
 }
