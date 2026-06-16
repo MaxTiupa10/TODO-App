@@ -1,5 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO-App.Api", "TODO-App.Api\TODO-App.Api.csproj", "{5C1D6DA0-FFAE-461E-8D5B-039A9B405B28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO-App.Domain", "TODO-App.Domain\TODO-App.Domain.csproj", "{E8B69E72-4DA1-4BBC-9CE2-C216AB899C2C}"
@@ -7,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO-App.DataAccess", "TODO-App.DataAccess\TODO-App.DataAccess.csproj", "{B0339B50-133A-49CC-BFF4-8F1CCC5E3791}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO-App.Services", "TODO-App.Services\TODO-App.Services.csproj", "{8A2E42F7-1711-4B39-8F98-850A134A5B3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO-App.Tests", "TODO-App.Tests\TODO-App.Tests.csproj", "{03264E07-DC53-48B7-A67E-7037AD4B3F4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +33,9 @@ Global
 		{8A2E42F7-1711-4B39-8F98-850A134A5B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A2E42F7-1711-4B39-8F98-850A134A5B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A2E42F7-1711-4B39-8F98-850A134A5B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03264E07-DC53-48B7-A67E-7037AD4B3F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03264E07-DC53-48B7-A67E-7037AD4B3F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03264E07-DC53-48B7-A67E-7037AD4B3F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03264E07-DC53-48B7-A67E-7037AD4B3F4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
