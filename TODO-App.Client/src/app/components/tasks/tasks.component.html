@@ -1,0 +1,116 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">My Tasks</h1>
+    <button class="btn btn-primary" (click)="openCreateForm()">
+      <i class="bi bi-plus-lg"></i> New Task
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label class="form-label">Search</label>
+          <input class="form-control" [(ngModel)]="search" placeholder="Search by title or description" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Category</label>
+          <select class="form-select" [(ngModel)]="selectedCategoryId">
+            <option [ngValue]="null">All categories</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+          </select>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+          <button class="btn btn-outline-primary flex-grow-1" (click)="applyFilters()">Apply</button>
+          <button class="btn btn-outline-secondary" (click)="clearFilters()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showForm" class="card mb-4 border-primary">
+    <div class="card-body">
+      <h5 class="card-title">{{ editingTask ? 'Edit Task' : 'New Task' }}</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Title</label>
+          <input class="form-control" [(ngModel)]="formTitle" />
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Category</label>
+          <select class="form-select" [(ngModel)]="formCategoryId">
+            <option [ngValue]="null">No category</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="formDescription"></textarea>
+        </div>
+        <div class="col-12" *ngIf="editingTask">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="formIsCompleted" id="completedCheck" />
+            <label class="form-check-label" for="completedCheck">Completed</label>
+          </div>
+        </div>
+        <div class="col-12 d-flex gap-2">
+          <button class="btn btn-success" (click)="saveTask()">Save</button>
+          <button class="btn btn-secondary" (click)="closeForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5 text-muted">Loading tasks...</div>
+
+  <div *ngIf="!loading && tasks.length === 0" class="alert alert-info">
+    No tasks found. Create your first task!
+  </div>
+
+  <div class="list-group mb-4" *ngIf="!loading && tasks.length > 0">
+    <div class="list-group-item" *ngFor="let task of tasks">
+      <div class="d-flex justify-content-between align-items-start gap-3">
+        <div class="d-flex gap-3 align-items-start flex-grow-1">
+          <input
+            type="checkbox"
+            class="form-check-input mt-1"
+            [checked]="task.isCompleted"
+            (change)="toggleComplete(task)"
+          />
+          <div>
+            <h6 class="mb-1" [class.text-decoration-line-through]="task.isCompleted" [class.text-muted]="task.isCompleted">
+              {{ task.title }}
+            </h6>
+            <p class="mb-1 text-muted small" *ngIf="task.description">{{ task.description }}</p>
+            <span class="badge bg-secondary me-2" *ngIf="task.categoryName">{{ task.categoryName }}</span>
+            <small class="text-muted">{{ task.createdAt | date:'medium' }}</small>
+          </div>
+        </div>
+        <div class="btn-group btn-group-sm">
+          <button class="btn btn-outline-primary" (click)="openEditForm(task)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-outline-danger" (click)="deleteTask(task)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav *ngIf="totalPages > 1">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="pageNumber === 1">
+        <button class="page-link" (click)="goToPage(pageNumber - 1)">Previous</button>
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link">Page {{ pageNumber }} of {{ totalPages }} ({{ totalCount }} total)</span>
+      </li>
+      <li class="page-item" [class.disabled]="pageNumber === totalPages">
+        <button class="page-link" (click)="goToPage(pageNumber + 1)">Next</button>
+      </li>
+    </ul>
+  </nav>
+</div>
