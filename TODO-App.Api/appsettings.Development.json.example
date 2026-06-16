@@ -1,0 +1,11 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=TodoDb;Username=postgres;Password=YOUR_PASSWORD"
+  },
+  "Jwt": {
+    "Key": "YourSuperSecretKeyForJwtTokenGeneration_Min32Chars!",
+    "Issuer": "TODO-App",
+    "Audience": "TODO-App",
+    "ExpireMinutes": 60
+  }
+}

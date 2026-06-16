@@ -1,55 +1,45 @@
-﻿using TODO_App.DataAccess.Interfaces;
-using TODO_App.Domain.Entities;
+﻿using TODO_App.Domain.Entities;
+using TODO_App.Domain.Interfaces;
 using TODO_App.Services.DTOs;
-
+using TODO_App.Services.Interfaces;
 
 namespace TODO_App.Services.Services;
 
 public class TaskService : ITaskService
 {
     private readonly ITaskRepository _taskRepository;
+    private readonly ICategoryRepository _categoryRepository;
 
-    public TaskService(ITaskRepository taskRepository)
+    public TaskService(ITaskRepository taskRepository, ICategoryRepository categoryRepository)
     {
         _taskRepository = taskRepository;
+        _categoryRepository = categoryRepository;
     }
 
-    public async Task<IEnumerable<TaskDto>> GetTasksAsync(int userId, int pageNumber, int pageSize, int? categoryId, string? searchQuery)
+    public async Task<PagedResult<TaskDto>> GetTasksAsync(int userId, int pageNumber, int pageSize, int? categoryId, string? searchQuery)
     {
-        var tasks = await _taskRepository.GetTaskAsync(userId, pageNumber, pageSize, categoryId, searchQuery);
-        
-        // Мапимо сутності БД на DTO
-        return tasks.Select(t => new TaskDto
+        var (tasks, totalCount) = await _taskRepository.GetTasksAsync(userId, pageNumber, pageSize, categoryId, searchQuery);
+
+        return new PagedResult<TaskDto>
         {
-            Id = t.Id,
-            Title = t.Title,
-            Description = t.Description,
-            IsCompleted = t.IsCompleted,
-            CreatedAt = t.CreatedAt,
-            CategoryId = t.CategoryId,
-            CategoryName = t.Category?.Name
-        });
+            Items = tasks.Select(MapToDto),
+            TotalCount = totalCount,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
     }
 
     public async Task<TaskDto?> GetTaskByIdAsync(int userId, int taskId)
     {
         var task = await _taskRepository.GetTaskByIdAsync(userId, taskId);
-        if (task == null) return null;
-
-        return new TaskDto
-        {
-            Id = task.Id,
-            Title = task.Title,
-            Description = task.Description,
-            IsCompleted = task.IsCompleted,
-            CreatedAt = task.CreatedAt,
-            CategoryId = task.CategoryId,
-            CategoryName = task.Category?.Name
-        };
+        return task == null ? null : MapToDto(task);
     }
 
     public async Task<TaskDto> CreateTaskAsync(int userId, CreateTaskDto dto)
     {
+        if (!await IsCategoryValidForUserAsync(userId, dto.CategoryId))
+            throw new ArgumentException("Category not found or does not belong to you.");
+
         var task = new ToDoTask
         {
             UserId = userId,
@@ -63,25 +53,23 @@ public class TaskService : ITaskService
         await _taskRepository.AddTaskAsync(task);
         await _taskRepository.SaveChangesAsync();
 
-        // Повертаємо створену таску у вигляді DTO (можна було б підтягнути категорію, але для простоти просто мапимо)
-        return new TaskDto 
-        { 
-            Id = task.Id, Title = task.Title, Description = task.Description, 
-            IsCompleted = task.IsCompleted, CreatedAt = task.CreatedAt, CategoryId = task.CategoryId 
-        };
+        return MapToDto(task);
     }
 
     public async Task<bool> UpdateTaskAsync(int userId, int taskId, UpdateTaskDto dto)
     {
+        if (!await IsCategoryValidForUserAsync(userId, dto.CategoryId))
+            throw new ArgumentException("Category not found or does not belong to you.");
+
         var task = await _taskRepository.GetTaskByIdAsync(userId, taskId);
-        if (task == null) return false; // Таски немає, або вона належить іншому юзеру
+        if (task == null) return false;
 
         task.Title = dto.Title;
         task.Description = dto.Description;
         task.IsCompleted = dto.IsCompleted;
         task.CategoryId = dto.CategoryId;
 
-        _taskRepository.UpdateTaskAsync(task);
+        _taskRepository.UpdateTask(task);
         await _taskRepository.SaveChangesAsync();
         return true;
     }
@@ -91,8 +79,28 @@ public class TaskService : ITaskService
         var task = await _taskRepository.GetTaskByIdAsync(userId, taskId);
         if (task == null) return false;
 
-        _taskRepository.DeleteTaskAsync(task);
+        _taskRepository.DeleteTask(task);
         await _taskRepository.SaveChangesAsync();
         return true;
     }
+
+    private async Task<bool> IsCategoryValidForUserAsync(int userId, int? categoryId)
+    {
+        if (!categoryId.HasValue)
+            return true;
+
+        var category = await _categoryRepository.GetByIdAsync(userId, categoryId.Value);
+        return category != null;
+    }
+
+    private static TaskDto MapToDto(ToDoTask task) => new()
+    {
+        Id = task.Id,
+        Title = task.Title,
+        Description = task.Description,
+        IsCompleted = task.IsCompleted,
+        CreatedAt = task.CreatedAt,
+        CategoryId = task.CategoryId,
+        CategoryName = task.Category?.Name
+    };
 }
