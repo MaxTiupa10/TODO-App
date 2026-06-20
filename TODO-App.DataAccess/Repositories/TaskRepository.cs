@@ -21,8 +21,8 @@ public class TaskRepository : ITaskRepository
         int? categoryId,
         string? searchQuery,
         string? listType,
-        DateOnly? dateFrom,
-        DateOnly? dateTo)
+        DateTime? deadlineFromUtc,
+        DateTime? deadlineToUtc)
     {
         var query = _dbContext.Tasks
             .Include(t => t.Category)
@@ -39,16 +39,16 @@ public class TaskRepository : ITaskRepository
                                      (t.Description != null && t.Description.ToLower().Contains(term)));
         }
 
-        if (dateFrom.HasValue)
+        if (deadlineFromUtc.HasValue)
         {
-            var fromUtc = dateFrom.Value.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+            var fromUtc = DateTime.SpecifyKind(deadlineFromUtc.Value, DateTimeKind.Utc);
             query = query.Where(t => t.Deadline.HasValue && t.Deadline.Value >= fromUtc);
         }
 
-        if (dateTo.HasValue)
+        if (deadlineToUtc.HasValue)
         {
-            var toExclusiveUtc = dateTo.Value.AddDays(1).ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
-            query = query.Where(t => t.Deadline.HasValue && t.Deadline.Value < toExclusiveUtc);
+            var toUtc = DateTime.SpecifyKind(deadlineToUtc.Value, DateTimeKind.Utc);
+            query = query.Where(t => t.Deadline.HasValue && t.Deadline.Value <= toUtc);
         }
 
         var todayStart = DateTime.UtcNow.Date;

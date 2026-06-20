@@ -11,8 +11,8 @@ public interface ITaskRepository
         int? categoryId,
         string? searchQuery,
         string? listType,
-        DateOnly? dateFrom,
-        DateOnly? dateTo);
+        DateTime? deadlineFromUtc,
+        DateTime? deadlineToUtc);
     Task<ToDoTask?> GetTaskByIdAsync(int userId, int taskId);
     Task AddTaskAsync(ToDoTask task);
     void UpdateTask(ToDoTask task);

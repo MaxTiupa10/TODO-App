@@ -11,8 +11,8 @@ public interface ITaskService
         int? categoryId,
         string? searchQuery,
         string? listType,
-        DateOnly? dateFrom,
-        DateOnly? dateTo);
+        DateTime? deadlineFromUtc,
+        DateTime? deadlineToUtc);
     Task<TaskDto?> GetTaskByIdAsync(int userId, int taskId);
     Task<TaskDto> CreateTaskAsync(int userId, CreateTaskDto dto);
     Task<bool> UpdateTaskAsync(int userId, int taskId, UpdateTaskDto dto);
