@@ -6,7 +6,10 @@ public class TaskDto
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
     public bool IsCompleted { get; set; }
+    public DateTime? CompletedAt { get; set; }
+    public bool IsImportant { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime? Deadline { get; set; }
     public int? CategoryId { get; set; }
     public string? CategoryName { get; set; } // Щоб Angular міг легко вивести назву категорії
 }

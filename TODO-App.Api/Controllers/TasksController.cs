@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TODO_App.Extensions;
 using TODO_App.Services.DTOs;
+using TODO_App.Services.Helpers;
 using TODO_App.Services.Interfaces;
 
 namespace TODO_App.Controllers;
@@ -23,9 +24,42 @@ public class TasksController : ControllerBase
         [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] int? categoryId = null,
-        [FromQuery] string? search = null)
+        [FromQuery] string? search = null,
+        [FromQuery] string? listType = null,
+        [FromQuery] string? dateFrom = null,
+        [FromQuery] string? dateTo = null)
     {
-        var result = await _taskService.GetTasksAsync(User.GetUserId(), pageNumber, pageSize, categoryId, search);
+        if (!TaskQueryDateParser.TryParse(dateFrom, out var parsedDateFrom, out var dateFromError))
+        {
+            return BadRequest(new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Validation failed",
+                Detail = dateFromError
+            });
+        }
+
+        if (!TaskQueryDateParser.TryParse(dateTo, out var parsedDateTo, out var dateToError))
+        {
+            return BadRequest(new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Validation failed",
+                Detail = dateToError
+            });
+        }
+
+        var (normalizedFrom, normalizedTo) = TaskQueryDateParser.NormalizeRange(parsedDateFrom, parsedDateTo);
+
+        var result = await _taskService.GetTasksAsync(
+            User.GetUserId(),
+            pageNumber,
+            pageSize,
+            categoryId,
+            search,
+            listType,
+            normalizedFrom,
+            normalizedTo);
         return Ok(result);
     }
 

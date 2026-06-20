@@ -1,13 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" routerLink="/tasks">TODO App</a>
+    <a class="navbar-brand" routerLink="/tasks">{{ 'nav.brand' | t }}</a>
     <div class="navbar-nav me-auto">
-      <a class="nav-link" routerLink="/tasks" routerLinkActive="active">Tasks</a>
-      <a class="nav-link" routerLink="/categories" routerLinkActive="active">Categories</a>
+      <a class="nav-link" routerLink="/tasks" routerLinkActive="active">{{ 'nav.tasks' | t }}</a>
+      <a class="nav-link" routerLink="/categories" routerLinkActive="active">{{ 'nav.categories' | t }}</a>
+      <a class="nav-link" routerLink="/settings" routerLinkActive="active">{{ 'nav.settings' | t }}</a>
     </div>
     <div class="d-flex align-items-center gap-3 text-white">
       <span class="small" *ngIf="auth.getUsername()">{{ auth.getUsername() }}</span>
-      <button class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
+      <button class="btn btn-outline-light btn-sm" (click)="logout()">{{ 'nav.logout' | t }}</button>
     </div>
   </div>
 </nav>

@@ -16,9 +16,25 @@ public class TaskService : ITaskService
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<PagedResult<TaskDto>> GetTasksAsync(int userId, int pageNumber, int pageSize, int? categoryId, string? searchQuery)
+    public async Task<PagedResult<TaskDto>> GetTasksAsync(
+        int userId,
+        int pageNumber,
+        int pageSize,
+        int? categoryId,
+        string? searchQuery,
+        string? listType,
+        DateOnly? dateFrom,
+        DateOnly? dateTo)
     {
-        var (tasks, totalCount) = await _taskRepository.GetTasksAsync(userId, pageNumber, pageSize, categoryId, searchQuery);
+        var (tasks, totalCount) = await _taskRepository.GetTasksAsync(
+            userId,
+            pageNumber,
+            pageSize,
+            categoryId,
+            searchQuery,
+            listType,
+            dateFrom,
+            dateTo);
 
         return new PagedResult<TaskDto>
         {
@@ -46,6 +62,8 @@ public class TaskService : ITaskService
             Title = dto.Title,
             Description = dto.Description,
             CategoryId = dto.CategoryId,
+            Deadline = dto.Deadline,
+            IsImportant = dto.IsImportant,
             IsCompleted = false,
             CreatedAt = DateTime.UtcNow
         };
@@ -66,7 +84,15 @@ public class TaskService : ITaskService
 
         task.Title = dto.Title;
         task.Description = dto.Description;
+
+        if (dto.IsCompleted && !task.IsCompleted)
+            task.CompletedAt = DateTime.UtcNow;
+        else if (!dto.IsCompleted && task.IsCompleted)
+            task.CompletedAt = null;
+
         task.IsCompleted = dto.IsCompleted;
+        task.IsImportant = dto.IsImportant;
+        task.Deadline = dto.Deadline;
         task.CategoryId = dto.CategoryId;
 
         _taskRepository.UpdateTask(task);
@@ -99,7 +125,10 @@ public class TaskService : ITaskService
         Title = task.Title,
         Description = task.Description,
         IsCompleted = task.IsCompleted,
+        CompletedAt = task.CompletedAt,
+        IsImportant = task.IsImportant,
         CreatedAt = task.CreatedAt,
+        Deadline = task.Deadline,
         CategoryId = task.CategoryId,
         CategoryName = task.Category?.Name
     };

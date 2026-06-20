@@ -1,26 +1,30 @@
 <div class="auth-container">
+  <div class="auth-language">
+    <app-language-switcher></app-language-switcher>
+  </div>
+
   <div class="card shadow-sm">
     <div class="card-body p-4">
-      <h2 class="card-title text-center mb-4">Register</h2>
+      <h2 class="card-title text-center mb-4">{{ 'register.title' | t }}</h2>
 
       <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
       <form (ngSubmit)="submit()">
         <div class="mb-3">
-          <label class="form-label">Username</label>
+          <label class="form-label">{{ 'register.username' | t }}</label>
           <input class="form-control" [(ngModel)]="username" name="username" required />
         </div>
         <div class="mb-3">
-          <label class="form-label">Password</label>
+          <label class="form-label">{{ 'register.password' | t }}</label>
           <input type="password" class="form-control" [(ngModel)]="password" name="password" required />
         </div>
         <button class="btn btn-primary w-100" type="submit" [disabled]="loading">
-          {{ loading ? 'Creating account...' : 'Register' }}
+          {{ loading ? ('register.submitting' | t) : ('register.submit' | t) }}
         </button>
       </form>
 
       <p class="text-center mt-3 mb-0">
-        Already have an account? <a routerLink="/login">Sign In</a>
+        {{ 'register.hasAccount' | t }} <a routerLink="/login">{{ 'register.login' | t }}</a>
       </p>
     </div>
   </div>

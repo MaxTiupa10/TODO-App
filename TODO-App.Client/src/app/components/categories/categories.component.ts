@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Category } from '../../models';
 import { CategoryService } from '../../services/category.service';
+import { LanguageService } from '../../services/language.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -19,7 +21,10 @@ export class CategoriesComponent implements OnInit {
   error = '';
   loading = false;
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     this.loadCategories();
@@ -33,7 +38,7 @@ export class CategoriesComponent implements OnInit {
         this.loading = false;
       },
       error: () => {
-        this.error = 'Failed to load categories';
+        this.error = this.languageService.translate('categories.error.load');
         this.loading = false;
       }
     });
@@ -47,7 +52,7 @@ export class CategoriesComponent implements OnInit {
         this.newCategoryName = '';
         this.loadCategories();
       },
-      error: () => (this.error = 'Failed to create category')
+      error: () => (this.error = this.languageService.translate('categories.error.create'))
     });
   }
 
@@ -69,16 +74,16 @@ export class CategoriesComponent implements OnInit {
         this.cancelEdit();
         this.loadCategories();
       },
-      error: () => (this.error = 'Failed to update category')
+      error: () => (this.error = this.languageService.translate('categories.error.update'))
     });
   }
 
   deleteCategory(category: Category) {
-    if (!confirm(`Delete category "${category.name}"?`)) return;
+    if (!confirm(this.languageService.translate('categories.deleteConfirm', { name: category.name }))) return;
 
     this.categoryService.delete(category.id).subscribe({
       next: () => this.loadCategories(),
-      error: () => (this.error = 'Failed to delete category')
+      error: () => (this.error = this.languageService.translate('categories.error.delete'))
     });
   }
 }
