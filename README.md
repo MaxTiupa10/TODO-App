@@ -306,11 +306,11 @@ sequenceDiagram
 
 ### 1. Вхід / реєстрація
 
-![Сторінка входу](docs/screenshots/01-login.png)
+<img width="670" height="568" alt="image" src="https://github.com/user-attachments/assets/ccb65a9c-eda4-408c-8937-8f50f191318f" />
 
 > 📸 *Скріншот: `/login` — форма входу з локалізованими підписами.*
 
-![Реєстрація](docs/screenshots/02-register.png)
+<img width="660" height="561" alt="image" src="https://github.com/user-attachments/assets/8f3ca3a5-d862-41ff-8748-29ab0e37e25e" />
 
 > 📸 *Скріншот: `/register` — створення нового акаунта.*
 
@@ -318,15 +318,15 @@ sequenceDiagram
 
 ### 2. Головна — вкладки завдань
 
-![Вкладки списків](docs/screenshots/03-task-tabs.png)
+<img width="2557" height="1236" alt="image" src="https://github.com/user-attachments/assets/b92d65de-ada5-40a4-b3e9-966dd19dcebe" />
 
 > 📸 *Скріншот: вкладки «Мій день», «Важливо», «Заплановано», «Виконано»…*
 
-![Мій день](docs/screenshots/04-my-day.png)
+<img width="1003" height="1051" alt="image" src="https://github.com/user-attachments/assets/489c2cd1-d4d9-4ccd-abdd-4ea7a0de3887" />
 
 > 📸 *Скріншот: «Мій день» — прострочені + сьогоднішні завдання.*
 
-![Заплановано](docs/screenshots/05-planned.png)
+<img width="1009" height="1150" alt="image" src="https://github.com/user-attachments/assets/605e01a2-92fc-4f31-ab32-fada2c8e143a" />
 
 > 📸 *Скріншот: «Заплановано» — майбутні завдання, відсортовані за дедлайном.*
 
@@ -334,15 +334,15 @@ sequenceDiagram
 
 ### 3. Пошук і фільтри
 
-![Пошук](docs/screenshots/06-search.png)
+<img width="1495" height="1014" alt="image" src="https://github.com/user-attachments/assets/cda46a40-b9f1-41e4-aefa-a9c168464cc9" />
 
 > 📸 *Скріншот: миттєвий пошук під час введення тексту.*
 
-![Фільтр дат](docs/screenshots/07-date-filter.png)
+<img width="1531" height="853" alt="image" src="https://github.com/user-attachments/assets/e97a22d2-c25b-469b-b89e-1402b1040124" />
 
 > 📸 *Скріншот: поля «Дата від» / «Дата до» + результат фільтрації.*
 
-![Прострочені](docs/screenshots/08-overdue.png)
+<img width="1480" height="748" alt="image" src="https://github.com/user-attachments/assets/335944b9-34b6-4694-855a-022d37d7dde7" />
 
 > 📸 *Скріншот: червоне підкреслення прострочених дедлайнів.*
 
@@ -350,11 +350,13 @@ sequenceDiagram
 
 ### 4. Категорії та налаштування
 
-![Категорії](docs/screenshots/09-categories.png)
+<img width="1557" height="544" alt="image" src="https://github.com/user-attachments/assets/836b7164-50a6-49c0-ad9b-2fdb62115185" />
 
 > 📸 *Скріншот: сторінка `/categories`.*
 
-![Налаштування / мова](docs/screenshots/10-settings-i18n.png)
+<img width="1504" height="346" alt="image" src="https://github.com/user-attachments/assets/b2790ec3-5dcc-4062-9faa-f9d5712a138a" />
+<img width="1513" height="352" alt="image" src="https://github.com/user-attachments/assets/8d8964c8-b23e-49a6-bdf8-8b0fc9408214" />
+
 
 > 📸 *Скріншот: `/settings` — перемикач UK/EN.*
 
@@ -362,11 +364,11 @@ sequenceDiagram
 
 ### 5. Backend
 
-![Swagger](docs/screenshots/11-swagger.png)
+<img width="1120" height="1159" alt="image" src="https://github.com/user-attachments/assets/996e4099-bc15-4a73-9be0-659c23ca3245" />
 
 > 📸 *Скріншот: Swagger UI `http://localhost:5000/swagger`.*
 
-![База даних](docs/screenshots/12-database.png)
+<img width="537" height="190" alt="image" src="https://github.com/user-attachments/assets/530fa08c-7782-4f97-b714-9d1027af8b50" />
 
 > 📸 *Скріншот: pgAdmin / таблиці Users, Categories, Tasks.*
 
