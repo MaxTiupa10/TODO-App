@@ -24,10 +24,18 @@ export class TaskService {
     if (categoryId != null) params = params.set('categoryId', categoryId);
     if (search) params = params.set('search', search);
     if (listType) params = params.set('listType', listType);
-    if (dateFrom) params = params.set('dateFrom', dateFrom);
-    if (dateTo) params = params.set('dateTo', dateTo);
+    if (dateFrom) params = params.set('deadlineFromUtc', this.toLocalDayStartUtcIso(dateFrom));
+    if (dateTo) params = params.set('deadlineToUtc', this.toLocalDayEndUtcIso(dateTo));
 
     return this.http.get<PagedResult<Task>>(API_URL, { params });
+  }
+
+  private toLocalDayStartUtcIso(date: string): string {
+    return new Date(`${date}T00:00:00`).toISOString();
+  }
+
+  private toLocalDayEndUtcIso(date: string): string {
+    return new Date(`${date}T23:59:59.999`).toISOString();
   }
 
   getTask(id: number) {

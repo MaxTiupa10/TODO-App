@@ -170,8 +170,8 @@ public class TasksApiTests : IClassFixture<CustomWebApplicationFactory>
 
         var ranged = await GetTasksAsync(
             listType: "tasks",
-            dateFrom: new DateTime(2026, 6, 12),
-            dateTo: new DateTime(2026, 6, 18));
+            deadlineFromUtc: new DateTime(2026, 6, 12, 0, 0, 0, DateTimeKind.Utc),
+            deadlineToUtc: new DateTime(2026, 6, 18, 23, 59, 59, 999, DateTimeKind.Utc));
 
         Assert.Equal(1, ranged.TotalCount);
         Assert.Single(ranged.Items, t => t.Title == "Middle task");
@@ -180,14 +180,24 @@ public class TasksApiTests : IClassFixture<CustomWebApplicationFactory>
     }
 
     [Fact]
-    public async Task GetTasks_InvalidDateFrom_ReturnsBadRequest()
+    public async Task GetTasks_DeadlineToUtc_ExcludesTasksAfterSelectedLocalDayEnd()
     {
-        var token = await RegisterAndLoginAsync("invalid_date_user");
+        var token = await RegisterAndLoginAsync("deadline_tz_user");
         _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var response = await _client.GetAsync("/api/tasks?dateFrom=20.06.2026");
+        await CreateTaskAsync(
+            "June 21 local midnight",
+            new DateTime(2026, 6, 20, 21, 0, 0, DateTimeKind.Utc));
+        await CreateTaskAsync(
+            "June 20 task",
+            new DateTime(2026, 6, 20, 12, 0, 0, DateTimeKind.Utc));
 
-        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        var deadlineToUtc = new DateTime(2026, 6, 20, 20, 59, 59, 999, DateTimeKind.Utc);
+
+        var result = await GetTasksAsync(listType: "tasks", deadlineToUtc: deadlineToUtc);
+
+        Assert.Single(result.Items);
+        Assert.Equal("June 20 task", result.Items.First().Title);
     }
 
     [Fact]
@@ -286,8 +296,8 @@ public class TasksApiTests : IClassFixture<CustomWebApplicationFactory>
         int? categoryId = null,
         string? search = null,
         string? listType = null,
-        DateTime? dateFrom = null,
-        DateTime? dateTo = null)
+        DateTime? deadlineFromUtc = null,
+        DateTime? deadlineToUtc = null)
     {
         var query = $"/api/tasks?pageNumber={pageNumber}&pageSize={pageSize}";
         if (categoryId.HasValue)
@@ -296,10 +306,10 @@ public class TasksApiTests : IClassFixture<CustomWebApplicationFactory>
             query += $"&search={Uri.EscapeDataString(search)}";
         if (!string.IsNullOrWhiteSpace(listType))
             query += $"&listType={Uri.EscapeDataString(listType)}";
-        if (dateFrom.HasValue)
-            query += $"&dateFrom={dateFrom.Value:yyyy-MM-dd}";
-        if (dateTo.HasValue)
-            query += $"&dateTo={dateTo.Value:yyyy-MM-dd}";
+        if (deadlineFromUtc.HasValue)
+            query += $"&deadlineFromUtc={Uri.EscapeDataString(deadlineFromUtc.Value.ToString("O"))}";
+        if (deadlineToUtc.HasValue)
+            query += $"&deadlineToUtc={Uri.EscapeDataString(deadlineToUtc.Value.ToString("O"))}";
 
         var result = await _client.GetFromJsonAsync<PagedResult<TaskDto>>(query, _jsonOptions);
         Assert.NotNull(result);

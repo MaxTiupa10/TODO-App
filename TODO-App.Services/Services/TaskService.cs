@@ -23,8 +23,8 @@ public class TaskService : ITaskService
         int? categoryId,
         string? searchQuery,
         string? listType,
-        DateOnly? dateFrom,
-        DateOnly? dateTo)
+        DateTime? deadlineFromUtc,
+        DateTime? deadlineToUtc)
     {
         var (tasks, totalCount) = await _taskRepository.GetTasksAsync(
             userId,
@@ -33,8 +33,8 @@ public class TaskService : ITaskService
             categoryId,
             searchQuery,
             listType,
-            dateFrom,
-            dateTo);
+            deadlineFromUtc,
+            deadlineToUtc);
 
         return new PagedResult<TaskDto>
         {

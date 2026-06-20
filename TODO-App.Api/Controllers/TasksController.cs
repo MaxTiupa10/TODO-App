@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TODO_App.Extensions;
 using TODO_App.Services.DTOs;
-using TODO_App.Services.Helpers;
 using TODO_App.Services.Interfaces;
 
 namespace TODO_App.Controllers;
@@ -26,30 +25,11 @@ public class TasksController : ControllerBase
         [FromQuery] int? categoryId = null,
         [FromQuery] string? search = null,
         [FromQuery] string? listType = null,
-        [FromQuery] string? dateFrom = null,
-        [FromQuery] string? dateTo = null)
+        [FromQuery] DateTime? deadlineFromUtc = null,
+        [FromQuery] DateTime? deadlineToUtc = null)
     {
-        if (!TaskQueryDateParser.TryParse(dateFrom, out var parsedDateFrom, out var dateFromError))
-        {
-            return BadRequest(new ProblemDetails
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Validation failed",
-                Detail = dateFromError
-            });
-        }
-
-        if (!TaskQueryDateParser.TryParse(dateTo, out var parsedDateTo, out var dateToError))
-        {
-            return BadRequest(new ProblemDetails
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Validation failed",
-                Detail = dateToError
-            });
-        }
-
-        var (normalizedFrom, normalizedTo) = TaskQueryDateParser.NormalizeRange(parsedDateFrom, parsedDateTo);
+        if (deadlineFromUtc.HasValue && deadlineToUtc.HasValue && deadlineFromUtc > deadlineToUtc)
+            (deadlineFromUtc, deadlineToUtc) = (deadlineToUtc, deadlineFromUtc);
 
         var result = await _taskService.GetTasksAsync(
             User.GetUserId(),
@@ -58,8 +38,8 @@ public class TasksController : ControllerBase
             categoryId,
             search,
             listType,
-            normalizedFrom,
-            normalizedTo);
+            deadlineFromUtc,
+            deadlineToUtc);
         return Ok(result);
     }
 
