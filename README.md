@@ -2,8 +2,7 @@
 
 Full-stack застосунок у стилі Microsoft To Do: реєстрація, JWT-авторизація, категорії, завдання з дедлайнами, вкладки списків, пошук і двомовний інтерфейс (UK/EN).
 
-> **Гілка з повною реалізацією:** `feature/task-lists-search-i18n`  
-> **Стек:** ASP.NET Core 8 · Angular 19 · PostgreSQL · Entity Framework Core
+
 
 ---
 
