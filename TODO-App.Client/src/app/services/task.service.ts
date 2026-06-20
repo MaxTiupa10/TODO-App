@@ -8,13 +8,24 @@ const API_URL = 'http://localhost:5000/api/tasks';
 export class TaskService {
   constructor(private http: HttpClient) {}
 
-  getTasks(pageNumber = 1, pageSize = 10, categoryId?: number, search?: string) {
+  getTasks(
+    pageNumber = 1,
+    pageSize = 10,
+    categoryId?: number,
+    search?: string,
+    listType?: string,
+    dateFrom?: string,
+    dateTo?: string
+  ) {
     let params = new HttpParams()
       .set('pageNumber', pageNumber)
       .set('pageSize', pageSize);
 
     if (categoryId != null) params = params.set('categoryId', categoryId);
     if (search) params = params.set('search', search);
+    if (listType) params = params.set('listType', listType);
+    if (dateFrom) params = params.set('dateFrom', dateFrom);
+    if (dateTo) params = params.set('dateTo', dateTo);
 
     return this.http.get<PagedResult<Task>>(API_URL, { params });
   }

@@ -1,8 +1,19 @@
 <div class="container py-4">
+  <div class="mb-3 d-flex flex-wrap gap-2">
+    <button
+      *ngFor="let list of listTypes"
+      class="btn btn-sm"
+      [class.btn-primary]="selectedListType === list.key"
+      [class.btn-outline-primary]="selectedListType !== list.key"
+      (click)="selectListType(list.key)">
+      {{ list.labelKey | t }}
+    </button>
+  </div>
+
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3 mb-0">My Tasks</h1>
+    <h1 class="h3 mb-0">{{ currentListTitle }}</h1>
     <button class="btn btn-primary" (click)="openCreateForm()">
-      <i class="bi bi-plus-lg"></i> New Task
+      <i class="bi bi-plus-lg"></i> {{ 'tasks.new' | t }}
     </button>
   </div>
 
@@ -11,20 +22,49 @@
   <div class="card mb-4">
     <div class="card-body">
       <div class="row g-3 align-items-end">
-        <div class="col-md-5">
-          <label class="form-label">Search</label>
-          <input class="form-control" [(ngModel)]="search" placeholder="Search by title or description" />
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">{{ 'tasks.search' | t }}</label>
+          <div class="search-shell" [class.is-searching]="searching">
+            <i class="bi bi-search search-icon"></i>
+            <input
+              class="form-control search-input"
+              [ngModel]="search"
+              (ngModelChange)="onSearchChange($event)"
+              [placeholder]="'tasks.searchPlaceholder' | t"
+            />
+            <span class="search-spinner" *ngIf="searching" aria-hidden="true"></span>
+          </div>
         </div>
-        <div class="col-md-4">
-          <label class="form-label">Category</label>
-          <select class="form-select" [(ngModel)]="selectedCategoryId">
-            <option [ngValue]="null">All categories</option>
+        <div class="col-lg-2 col-md-3">
+          <label class="form-label">{{ 'tasks.dateFrom' | t }}</label>
+          <input
+            type="date"
+            class="form-control"
+            [ngModel]="dateFrom"
+            (ngModelChange)="onDateFromChange($event)"
+          />
+        </div>
+        <div class="col-lg-2 col-md-3">
+          <label class="form-label">{{ 'tasks.dateTo' | t }}</label>
+          <input
+            type="date"
+            class="form-control"
+            [ngModel]="dateTo"
+            (ngModelChange)="onDateToChange($event)"
+          />
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <label class="form-label">{{ 'tasks.category' | t }}</label>
+          <select
+            class="form-select"
+            [ngModel]="selectedCategoryId"
+            (ngModelChange)="onCategoryChange($event)">
+            <option [ngValue]="null">{{ 'tasks.allCategories' | t }}</option>
             <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
           </select>
         </div>
-        <div class="col-md-3 d-flex gap-2">
-          <button class="btn btn-outline-primary flex-grow-1" (click)="applyFilters()">Apply</button>
-          <button class="btn btn-outline-secondary" (click)="clearFilters()">Clear</button>
+        <div class="col-lg-2 col-md-2 d-flex">
+          <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">{{ 'tasks.clear' | t }}</button>
         </div>
       </div>
     </div>
@@ -32,84 +72,124 @@
 
   <div *ngIf="showForm" class="card mb-4 border-primary">
     <div class="card-body">
-      <h5 class="card-title">{{ editingTask ? 'Edit Task' : 'New Task' }}</h5>
+      <h5 class="card-title">{{ editingTask ? ('tasks.edit' | t) : ('tasks.new' | t) }}</h5>
       <div class="row g-3">
         <div class="col-md-6">
-          <label class="form-label">Title</label>
+          <label class="form-label">{{ 'tasks.title' | t }}</label>
           <input class="form-control" [(ngModel)]="formTitle" />
         </div>
         <div class="col-md-6">
-          <label class="form-label">Category</label>
+          <label class="form-label">{{ 'tasks.category' | t }}</label>
           <select class="form-select" [(ngModel)]="formCategoryId">
-            <option [ngValue]="null">No category</option>
+            <option [ngValue]="null">{{ 'tasks.noCategory' | t }}</option>
             <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
           </select>
         </div>
+        <div class="col-md-6">
+          <label class="form-label">{{ 'tasks.deadline' | t }}</label>
+          <input type="datetime-local" class="form-control" [(ngModel)]="formDeadline" />
+        </div>
         <div class="col-12">
-          <label class="form-label">Description</label>
+          <label class="form-label">{{ 'tasks.description' | t }}</label>
           <textarea class="form-control" rows="3" [(ngModel)]="formDescription"></textarea>
         </div>
-        <div class="col-12" *ngIf="editingTask">
+        <div class="col-12">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" [(ngModel)]="formIsCompleted" id="completedCheck" />
-            <label class="form-check-label" for="completedCheck">Completed</label>
+            <label class="form-check-label" for="completedCheck">{{ 'tasks.completed' | t }}</label>
+          </div>
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="formIsImportant" id="importantCheck" />
+            <label class="form-check-label" for="importantCheck">{{ 'tasks.important' | t }}</label>
           </div>
         </div>
         <div class="col-12 d-flex gap-2">
-          <button class="btn btn-success" (click)="saveTask()">Save</button>
-          <button class="btn btn-secondary" (click)="closeForm()">Cancel</button>
+          <button class="btn btn-success" (click)="saveTask()">{{ 'tasks.save' | t }}</button>
+          <button class="btn btn-secondary" (click)="closeForm()">{{ 'tasks.cancel' | t }}</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div *ngIf="loading" class="text-center py-5 text-muted">Loading tasks...</div>
+  <div class="tasks-results" [class.is-searching]="searching">
+    <div *ngIf="initialLoading" class="tasks-skeleton mb-4">
+      <div class="skeleton-item" *ngFor="let _ of [1, 2, 3, 4]"></div>
+    </div>
 
-  <div *ngIf="!loading && tasks.length === 0" class="alert alert-info">
-    No tasks found. Create your first task!
-  </div>
+    <div
+      *ngIf="!initialLoading && tasks.length === 0"
+      class="alert alert-info tasks-empty"
+      [class.is-visible]="!searching">
+      {{ 'tasks.empty' | t }}
+    </div>
 
-  <div class="list-group mb-4" *ngIf="!loading && tasks.length > 0">
-    <div class="list-group-item" *ngFor="let task of tasks">
-      <div class="d-flex justify-content-between align-items-start gap-3">
-        <div class="d-flex gap-3 align-items-start flex-grow-1">
-          <input
-            type="checkbox"
-            class="form-check-input mt-1"
-            [checked]="task.isCompleted"
-            (change)="toggleComplete(task)"
-          />
-          <div>
-            <h6 class="mb-1" [class.text-decoration-line-through]="task.isCompleted" [class.text-muted]="task.isCompleted">
-              {{ task.title }}
-            </h6>
-            <p class="mb-1 text-muted small" *ngIf="task.description">{{ task.description }}</p>
-            <span class="badge bg-secondary me-2" *ngIf="task.categoryName">{{ task.categoryName }}</span>
-            <small class="text-muted">{{ task.createdAt | date:'medium' }}</small>
+    <div
+      class="list-group mb-4 tasks-list"
+      *ngIf="!initialLoading && tasks.length > 0"
+      [attr.data-key]="listAnimationKey"
+      [class.is-searching]="searching">
+      <div
+        class="list-group-item task-item"
+        *ngFor="let task of tasks; let i = index; trackBy: trackByTaskId"
+        [style.--i]="i">
+        <div class="d-flex justify-content-between align-items-start gap-3">
+          <div class="d-flex gap-3 align-items-start flex-grow-1">
+            <input
+              type="checkbox"
+              class="form-check-input mt-1"
+              [checked]="task.isCompleted"
+              (change)="toggleComplete(task)"
+            />
+            <div>
+              <h6
+                class="mb-1"
+                [class.text-decoration-line-through]="task.isCompleted"
+                [class.text-muted]="task.isCompleted"
+                [class.task-overdue]="isOverdue(task)">
+                {{ task.title }}
+                <i class="bi ms-2" [class.bi-star-fill]="task.isImportant" [class.bi-star]="!task.isImportant"></i>
+              </h6>
+              <p class="mb-1 text-muted small" *ngIf="task.description">{{ task.description }}</p>
+              <span class="badge bg-secondary me-2" *ngIf="task.categoryName">{{ task.categoryName }}</span>
+              <small class="text-muted d-block">{{ 'tasks.createdAt' | t }} {{ task.createdAt | date:'medium' }}</small>
+              <small class="text-muted d-block" *ngIf="task.isCompleted && task.completedAt">
+                {{ 'tasks.completedAt' | t }} {{ task.completedAt | date:'medium' }}
+              </small>
+              <small
+                class="d-block"
+                [class.text-muted]="!isOverdue(task)"
+                [class.task-deadline-overdue]="isOverdue(task)"
+                *ngIf="task.deadline">
+                {{ 'tasks.deadlineAt' | t }} {{ task.deadline | date:'medium' }}
+              </small>
+            </div>
+          </div>
+          <div class="btn-group btn-group-sm">
+            <button class="btn btn-outline-warning" (click)="toggleImportant(task)" [title]="'tasks.important' | t">
+              <i class="bi" [class.bi-star-fill]="task.isImportant" [class.bi-star]="!task.isImportant"></i>
+            </button>
+            <button class="btn btn-outline-primary" (click)="openEditForm(task)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-outline-danger" (click)="deleteTask(task)">
+              <i class="bi bi-trash"></i>
+            </button>
           </div>
         </div>
-        <div class="btn-group btn-group-sm">
-          <button class="btn btn-outline-primary" (click)="openEditForm(task)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button class="btn btn-outline-danger" (click)="deleteTask(task)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
       </div>
     </div>
   </div>
 
-  <nav *ngIf="totalPages > 1">
+  <nav *ngIf="!initialLoading && totalPages > 1">
     <ul class="pagination justify-content-center">
       <li class="page-item" [class.disabled]="pageNumber === 1">
-        <button class="page-link" (click)="goToPage(pageNumber - 1)">Previous</button>
+        <button class="page-link" (click)="goToPage(pageNumber - 1)">{{ 'tasks.previous' | t }}</button>
       </li>
       <li class="page-item disabled">
-        <span class="page-link">Page {{ pageNumber }} of {{ totalPages }} ({{ totalCount }} total)</span>
+        <span class="page-link">{{ 'tasks.page' | t:{ page: pageNumber, total: totalPages, count: totalCount } }}</span>
       </li>
       <li class="page-item" [class.disabled]="pageNumber === totalPages">
-        <button class="page-link" (click)="goToPage(pageNumber + 1)">Next</button>
+        <button class="page-link" (click)="goToPage(pageNumber + 1)">{{ 'tasks.next' | t }}</button>
       </li>
     </ul>
   </nav>

@@ -51,6 +51,71 @@ public class TaskServiceTests
     }
 
     [Fact]
+    public async Task UpdateTaskAsync_WhenMarkedCompleted_SetsCompletedAt()
+    {
+        var task = new ToDoTask
+        {
+            Id = 1,
+            Title = "Task",
+            UserId = 1,
+            IsCompleted = false,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _taskRepository
+            .Setup(r => r.GetTaskByIdAsync(1, 1))
+            .ReturnsAsync(task);
+
+        _taskRepository.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
+
+        var beforeUpdate = DateTime.UtcNow;
+        var result = await _sut.UpdateTaskAsync(1, 1, new UpdateTaskDto
+        {
+            Title = "Task",
+            IsCompleted = true,
+            IsImportant = false
+        });
+        var afterUpdate = DateTime.UtcNow;
+
+        Assert.True(result);
+        Assert.True(task.IsCompleted);
+        Assert.NotNull(task.CompletedAt);
+        Assert.InRange(task.CompletedAt.Value, beforeUpdate, afterUpdate);
+    }
+
+    [Fact]
+    public async Task UpdateTaskAsync_WhenUnmarkedCompleted_ClearsCompletedAt()
+    {
+        var completedAt = DateTime.UtcNow.AddHours(-1);
+        var task = new ToDoTask
+        {
+            Id = 1,
+            Title = "Task",
+            UserId = 1,
+            IsCompleted = true,
+            CompletedAt = completedAt,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _taskRepository
+            .Setup(r => r.GetTaskByIdAsync(1, 1))
+            .ReturnsAsync(task);
+
+        _taskRepository.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
+
+        var result = await _sut.UpdateTaskAsync(1, 1, new UpdateTaskDto
+        {
+            Title = "Task",
+            IsCompleted = false,
+            IsImportant = false
+        });
+
+        Assert.True(result);
+        Assert.False(task.IsCompleted);
+        Assert.Null(task.CompletedAt);
+    }
+
+    [Fact]
     public async Task GetTasksAsync_ReturnsPagedResult()
     {
         var tasks = new List<ToDoTask>
@@ -59,10 +124,10 @@ public class TaskServiceTests
         };
 
         _taskRepository
-            .Setup(r => r.GetTasksAsync(1, 1, 10, null, null))
+            .Setup(r => r.GetTasksAsync(1, 1, 10, null, null, null, null, null))
             .ReturnsAsync((tasks, 1));
 
-        var result = await _sut.GetTasksAsync(1, 1, 10, null, null);
+        var result = await _sut.GetTasksAsync(1, 1, 10, null, null, null, null, null);
 
         Assert.Single(result.Items);
         Assert.Equal(1, result.TotalCount);

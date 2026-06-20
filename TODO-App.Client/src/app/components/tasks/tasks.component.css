@@ -6,3 +6,169 @@
 .list-group-item:first-child {
   border-top: none;
 }
+
+.search-shell {
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+.search-shell.is-searching {
+  transform: translateY(-1px);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  pointer-events: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+  z-index: 1;
+}
+
+.search-shell.is-searching .search-icon {
+  color: #0d6efd;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.search-input {
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.search-shell.is-searching .search-input {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.12);
+  background-color: #fbfdff;
+}
+
+.search-spinner {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  width: 1rem;
+  height: 1rem;
+  margin-top: -0.5rem;
+  border: 2px solid rgba(13, 110, 253, 0.18);
+  border-top-color: #0d6efd;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.tasks-results {
+  min-height: 12rem;
+  transition: opacity 0.25s ease;
+}
+
+.tasks-list {
+  transition:
+    opacity 0.28s ease,
+    filter 0.28s ease,
+    transform 0.28s ease;
+}
+
+.tasks-list.is-searching {
+  opacity: 0.72;
+  filter: blur(0.4px);
+  transform: scale(0.998);
+}
+
+.tasks-empty {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.tasks-empty.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.task-item {
+  animation: taskReveal 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+.task-overdue {
+  color: #dc3545;
+  text-decoration: underline;
+  text-decoration-color: #dc3545;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.task-deadline-overdue {
+  color: #dc3545;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: #dc3545;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+.tasks-skeleton {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.skeleton-item {
+  height: 4.5rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(90deg, #eef2f6 25%, #f8fafc 50%, #eef2f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes taskReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .task-item,
+  .tasks-list,
+  .tasks-empty,
+  .search-shell,
+  .search-input,
+  .search-icon,
+  .skeleton-item {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .tasks-list.is-searching {
+    opacity: 0.85;
+    filter: none;
+    transform: none;
+  }
+}

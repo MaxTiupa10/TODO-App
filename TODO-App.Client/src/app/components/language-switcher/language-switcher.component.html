@@ -1,0 +1,18 @@
+<div class="btn-group" role="group">
+  <button
+    type="button"
+    class="btn btn-sm"
+    [class.btn-primary]="languageService.language() === 'uk'"
+    [class.btn-outline-primary]="languageService.language() !== 'uk'"
+    (click)="setLanguage('uk')">
+    {{ 'settings.language.uk' | t }}
+  </button>
+  <button
+    type="button"
+    class="btn btn-sm"
+    [class.btn-primary]="languageService.language() === 'en'"
+    [class.btn-outline-primary]="languageService.language() !== 'en'"
+    (click)="setLanguage('en')">
+    {{ 'settings.language.en' | t }}
+  </button>
+</div>

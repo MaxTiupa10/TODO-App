@@ -1,19 +1,19 @@
 <div class="container py-4">
-  <h1 class="h3 mb-4">Categories</h1>
+  <h1 class="h3 mb-4">{{ 'categories.title' | t }}</h1>
 
   <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 
   <div class="card mb-4">
     <div class="card-body">
-      <h5 class="card-title">Add Category</h5>
+      <h5 class="card-title">{{ 'categories.add' | t }}</h5>
       <div class="input-group">
-        <input class="form-control" [(ngModel)]="newCategoryName" placeholder="Category name" />
-        <button class="btn btn-primary" (click)="createCategory()">Add</button>
+        <input class="form-control" [(ngModel)]="newCategoryName" [placeholder]="'categories.namePlaceholder' | t" />
+        <button class="btn btn-primary" (click)="createCategory()">{{ 'categories.addButton' | t }}</button>
       </div>
     </div>
   </div>
 
-  <div *ngIf="loading" class="text-muted">Loading...</div>
+  <div *ngIf="loading" class="text-muted">{{ 'categories.loading' | t }}</div>
 
   <div class="list-group" *ngIf="!loading">
     <div class="list-group-item" *ngFor="let category of categories">
@@ -31,13 +31,13 @@
 
       <div class="input-group" *ngIf="editingId === category.id">
         <input class="form-control" [(ngModel)]="editingName" />
-        <button class="btn btn-success" (click)="saveEdit(category.id)">Save</button>
-        <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+        <button class="btn btn-success" (click)="saveEdit(category.id)">{{ 'categories.save' | t }}</button>
+        <button class="btn btn-secondary" (click)="cancelEdit()">{{ 'categories.cancel' | t }}</button>
       </div>
     </div>
 
     <div *ngIf="categories.length === 0" class="list-group-item text-muted">
-      No categories yet.
+      {{ 'categories.empty' | t }}
     </div>
   </div>
 </div>

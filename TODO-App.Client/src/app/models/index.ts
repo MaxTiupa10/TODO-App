@@ -3,7 +3,10 @@ export interface Task {
   title: string;
   description?: string;
   isCompleted: boolean;
+  completedAt?: string;
+  isImportant: boolean;
   createdAt: string;
+  deadline?: string;
   categoryId?: number;
   categoryName?: string;
 }
@@ -12,12 +15,16 @@ export interface CreateTask {
   title: string;
   description?: string;
   categoryId?: number;
+  isImportant?: boolean;
+  deadline?: string;
 }
 
 export interface UpdateTask {
   title: string;
   description?: string;
   isCompleted: boolean;
+  isImportant: boolean;
+  deadline?: string;
   categoryId?: number;
 }
 
